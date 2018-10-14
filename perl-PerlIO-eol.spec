@@ -4,25 +4,35 @@
 #
 Name     : perl-PerlIO-eol
 Version  : 0.17
-Release  : 1
+Release  : 2
 URL      : https://cpan.metacpan.org/authors/id/S/SH/SHLOMIF/PerlIO-eol-0.17.tar.gz
 Source0  : https://cpan.metacpan.org/authors/id/S/SH/SHLOMIF/PerlIO-eol-0.17.tar.gz
 Source1  : http://http.debian.net/debian/pool/main/libp/libperlio-eol-perl/libperlio-eol-perl_0.17-1.debian.tar.xz
 Summary  : 'PerlIO layer for normalizing line endings'
 Group    : Development/Tools
 License  : Artistic-1.0 Artistic-1.0-Perl GPL-1.0
-Requires: perl-PerlIO-eol-lib
-Requires: perl-PerlIO-eol-license
-Requires: perl-PerlIO-eol-man
+Requires: perl-PerlIO-eol-lib = %{version}-%{release}
+Requires: perl-PerlIO-eol-license = %{version}-%{release}
+BuildRequires : buildreq-cpan
 
 %description
 normalizing line endings.  It requires Perl version 5.7.3 or later.
 * Installation
 
+%package dev
+Summary: dev components for the perl-PerlIO-eol package.
+Group: Development
+Requires: perl-PerlIO-eol-lib = %{version}-%{release}
+Provides: perl-PerlIO-eol-devel = %{version}-%{release}
+
+%description dev
+dev components for the perl-PerlIO-eol package.
+
+
 %package lib
 Summary: lib components for the perl-PerlIO-eol package.
 Group: Libraries
-Requires: perl-PerlIO-eol-license
+Requires: perl-PerlIO-eol-license = %{version}-%{release}
 
 %description lib
 lib components for the perl-PerlIO-eol package.
@@ -36,19 +46,11 @@ Group: Default
 license components for the perl-PerlIO-eol package.
 
 
-%package man
-Summary: man components for the perl-PerlIO-eol package.
-Group: Default
-
-%description man
-man components for the perl-PerlIO-eol package.
-
-
 %prep
-tar -xf %{SOURCE1}
-cd ..
 %setup -q -n PerlIO-eol-0.17
-mkdir -p %{_topdir}/BUILD/PerlIO-eol-0.17/deblicense/
+cd ..
+%setup -q -T -D -n PerlIO-eol-0.17 -b 1
+mkdir -p deblicense/
 mv %{_topdir}/BUILD/debian/* %{_topdir}/BUILD/PerlIO-eol-0.17/deblicense/
 
 %build
@@ -73,12 +75,12 @@ make TEST_VERBOSE=1 test
 
 %install
 rm -rf %{buildroot}
-mkdir -p %{buildroot}/usr/share/doc/perl-PerlIO-eol
-cp LICENSE %{buildroot}/usr/share/doc/perl-PerlIO-eol/LICENSE
+mkdir -p %{buildroot}/usr/share/package-licenses/perl-PerlIO-eol
+cp LICENSE %{buildroot}/usr/share/package-licenses/perl-PerlIO-eol/LICENSE
 if test -f Makefile.PL; then
-make pure_install PERL_INSTALL_ROOT=%{buildroot}
+make pure_install PERL_INSTALL_ROOT=%{buildroot} INSTALLDIRS=vendor
 else
-./Build install --installdirs=site --destdir=%{buildroot}
+./Build install --installdirs=vendor --destdir=%{buildroot}
 fi
 find %{buildroot} -type f -name .packlist -exec rm -f {} ';'
 find %{buildroot} -depth -type d -exec rmdir {} 2>/dev/null ';'
@@ -87,16 +89,16 @@ find %{buildroot} -type f -name '*.bs' -empty -exec rm -f {} ';'
 
 %files
 %defattr(-,root,root,-)
-/usr/lib/perl5/site_perl/5.26.1/x86_64-linux-thread-multi/PerlIO/eol.pm
+/usr/lib/perl5/vendor_perl/5.26.1/x86_64-linux-thread-multi/PerlIO/eol.pm
+
+%files dev
+%defattr(-,root,root,-)
+/usr/share/man/man3/PerlIO::eol.3
 
 %files lib
 %defattr(-,root,root,-)
-/usr/lib/perl5/site_perl/5.26.1/x86_64-linux-thread-multi/auto/PerlIO/eol/eol.so
+/usr/lib/perl5/vendor_perl/5.26.1/x86_64-linux-thread-multi/auto/PerlIO/eol/eol.so
 
 %files license
-%defattr(-,root,root,-)
-/usr/share/doc/perl-PerlIO-eol/LICENSE
-
-%files man
-%defattr(-,root,root,-)
-/usr/share/man/man3/PerlIO::eol.3
+%defattr(0644,root,root,0755)
+/usr/share/package-licenses/perl-PerlIO-eol/LICENSE
