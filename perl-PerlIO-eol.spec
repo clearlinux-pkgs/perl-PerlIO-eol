@@ -4,7 +4,7 @@
 #
 Name     : perl-PerlIO-eol
 Version  : 0.17
-Release  : 15
+Release  : 16
 URL      : https://cpan.metacpan.org/authors/id/S/SH/SHLOMIF/PerlIO-eol-0.17.tar.gz
 Source0  : https://cpan.metacpan.org/authors/id/S/SH/SHLOMIF/PerlIO-eol-0.17.tar.gz
 Source1  : http://http.debian.net/debian/pool/main/libp/libperlio-eol-perl/libperlio-eol-perl_0.17-1.debian.tar.xz
