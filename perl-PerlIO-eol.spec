@@ -5,7 +5,7 @@
 #
 Name     : perl-PerlIO-eol
 Version  : 0.18
-Release  : 23
+Release  : 24
 URL      : https://cpan.metacpan.org/authors/id/S/SH/SHLOMIF/PerlIO-eol-0.18.tar.gz
 Source0  : https://cpan.metacpan.org/authors/id/S/SH/SHLOMIF/PerlIO-eol-0.18.tar.gz
 Source1  : http://http.debian.net/debian/pool/main/libp/libperlio-eol-perl/libperlio-eol-perl_0.17-1.debian.tar.xz
